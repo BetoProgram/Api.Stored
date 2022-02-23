@@ -2,10 +2,12 @@
 using Api.Stored.Core.Entities;
 using Api.Stored.Core.Repository;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -14,12 +16,13 @@ namespace Api.Stored.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MedicosController : ControllerBase
+    [Authorize]
+    public class MedicosCatController : ControllerBase
     {
         private readonly IRepositoryBase<TblCatMedico> _repositoryBase;
         private readonly IMapper _mapper;
 
-        public MedicosController(IRepositoryBase<TblCatMedico> repositoryBase, IMapper mapper)
+        public MedicosCatController(IRepositoryBase<TblCatMedico> repositoryBase, IMapper mapper)
         {
             _repositoryBase = repositoryBase;
             _mapper = mapper;
@@ -45,7 +48,9 @@ namespace Api.Stored.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] MedicoRequestDto model)
         {
+            string userName = User.FindFirst(ClaimTypes.Name)?.Value;
             var medico = _mapper.Map<TblCatMedico>(model);
+            medico.FcUsuarioRegistro = userName;
             await _repositoryBase.CreateAsync(medico);
             return Ok();
         }
@@ -54,6 +59,7 @@ namespace Api.Stored.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] MedicoRequestDto model)
         {
+            string userName = User.FindFirst(ClaimTypes.Name)?.Value;
             var medicoEncontrado = await _repositoryBase.FindBy(x => x.FiIdMedico == id);
 
             if (medicoEncontrado != null)
@@ -62,6 +68,7 @@ namespace Api.Stored.Controllers
             }
 
             medicoEncontrado.FdFechaModificacion = DateTime.Now;
+            medicoEncontrado.FcUsuarioModificacion = userName;
 
             medicoEncontrado = _mapper.Map<TblCatMedico>(model);
 

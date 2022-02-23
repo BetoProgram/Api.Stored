@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -48,7 +49,9 @@ namespace Api.Stored.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] PacienteRequestDto model)
         {
+            string userName = User.FindFirst(ClaimTypes.Name)?.Value;
             var paciente = _mapper.Map<TblCatPaciente>(model);
+            paciente.FcUsuarioRegistro = userName;
             await _repositoryBase.CreateAsync(paciente);
             return Ok();
         }
@@ -57,6 +60,8 @@ namespace Api.Stored.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] PacienteRequestDto model)
         {
+            string userName = User.FindFirst(ClaimTypes.Name)?.Value;
+
             var pacienteEncontrado = await _repositoryBase.FindBy(x => x.FiIdPaciente == id);
 
             if (pacienteEncontrado != null)
@@ -65,6 +70,7 @@ namespace Api.Stored.Controllers
             }
 
             pacienteEncontrado.FdFechaModificacion = DateTime.Now;
+            pacienteEncontrado.FcUsuarioModificacion = userName;
 
             pacienteEncontrado = _mapper.Map<TblCatPaciente>(model);
 
