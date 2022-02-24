@@ -1,6 +1,7 @@
 using Api.Stored.Core.Entities;
 using Api.Stored.Core.Repository;
 using Api.Stored.Infrastructure.Data;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -71,7 +72,9 @@ namespace Api.Stored
             });
 
             services.AddAutoMapper(typeof(Startup));
+            services.AddMediatR(typeof(Startup));
             services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddTransient(typeof(IDapperRepositoryBase<>), typeof(DapperRepositoryBase<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
