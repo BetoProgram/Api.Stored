@@ -6,7 +6,7 @@ namespace Api.Stored.Core.Repository
 {
     public interface IDapperRepositoryBase<T>
     {
-        void Execute(string query, object parameters = null, CommandType commandType = 0);
+        Task Execute(string query, object parameters = null, CommandType commandType = 0);
         Task<IEnumerable<T>> Query(string query, object parameters = null, CommandType commandType = 0);
         T QuerySingle(string query, object parameters = null);
     }

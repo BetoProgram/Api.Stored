@@ -231,8 +231,6 @@ namespace Api.Stored.Infrastructure.Data
 
                 entity.Property(e => e.FiMes).HasColumnName("fiMes");
 
-                entity.Property(e => e.FcActivo).HasColumnName("fcActivo");
-
                 entity.Property(e => e.FcEstado)
                     .IsRequired()
                     .HasMaxLength(25)

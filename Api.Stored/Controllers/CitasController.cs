@@ -1,4 +1,5 @@
-﻿using Api.Stored.Application.Citas.Querys;
+﻿using Api.Stored.Application.Citas.Commands;
+using Api.Stored.Application.Citas.Querys;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,13 @@ namespace Api.Stored.Controllers
         public async Task<IActionResult> GetAllCitas()
         {
             return Ok(await _mediator.Send(new ObtenerCitasQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] GenerarCitasCommand model)
+        {
+            await _mediator.Send(model);
+            return Ok();
         }
     }
 }

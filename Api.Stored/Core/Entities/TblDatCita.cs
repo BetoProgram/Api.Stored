@@ -19,7 +19,6 @@ namespace Api.Stored.Core.Entities
         public TimeSpan FtFinAtencion { get; set; }
         public string FcEstado { get; set; }
         public string FcObservaciones { get; set; }
-        public bool FcActivo { get; set; }
         public DateTime? FdFechaRegistro { get; set; }
         public DateTime? FdFechaModificacion { get; set; }
         public string FcUsuarioRegistro { get; set; }

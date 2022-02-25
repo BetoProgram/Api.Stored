@@ -44,7 +44,7 @@ namespace Api.Stored.Core.Repository
                 
         }
 
-        public void Execute(string query, object parameters = null, CommandType commandType = default)
+        public async Task Execute(string query, object parameters = null, CommandType commandType = default)
         {
             using (IDbConnection conn = new SqlConnection(connectionString))
             {
@@ -54,7 +54,7 @@ namespace Api.Stored.Core.Repository
                     {
                         conn.Open();
                     }
-                    conn.Execute(query, parameters);
+                    await conn.ExecuteAsync(query, parameters);
                 }
                 finally
                 {
