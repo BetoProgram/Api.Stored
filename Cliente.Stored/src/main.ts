@@ -7,6 +7,7 @@ import Default from './layouts/Default.vue'
 import NoDefault from './layouts/NoDefault.vue'
 
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 
@@ -96,9 +97,11 @@ import TreeTable from 'primevue/treetable';
 import TriStateCheckbox from 'primevue/tristatecheckbox';
 
 const app = createApp(App);
+const pinia = createPinia();
 
 app
 .use(router)
+.use(pinia)
 .use(PrimeVue, { ripple: true, inputStyle: 'outlined' })
 .use(ConfirmationService)
 .use(ToastService)
