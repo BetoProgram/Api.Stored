@@ -31,7 +31,7 @@ namespace Api.Stored.Controllers
         [HttpGet]
         public IEnumerable<MedicoResponseDto> Get()
         {
-            var medicos = _repositoryBase.FindAll();
+            var medicos = _repositoryBase.FindAll(x=>x.FcNombres);
             var medicosMap = _mapper.Map<List<MedicoResponseDto>>(medicos);
             return medicosMap;
         }

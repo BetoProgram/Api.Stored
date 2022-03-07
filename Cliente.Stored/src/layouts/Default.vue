@@ -1,6 +1,9 @@
 <template>
   <div>
     <MenuBar/>
+    <div class="layout-main">
+      <slot />
+		</div>
   </div>
 </template>
 

@@ -16,7 +16,7 @@ namespace Api.Stored.Core.Repository
         {
             _storedDbContext = storedDbContext;
         }
-        public async Task<List<T>> FindAll(params Expression<Func<T, object>>[] includes)
+        public async Task<List<T>> FindAll(Expression<Func<T, object>> order = null,params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _storedDbContext.Set<T>();
 
@@ -24,7 +24,7 @@ namespace Api.Stored.Core.Repository
             {
                 query = query.Include(include);
             }
-            return await query.AsNoTracking().ToListAsync();
+            return await query.AsNoTracking().OrderBy(order).Select(x => x).ToListAsync();
         }
 
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes)

@@ -18,6 +18,12 @@ const routes = [
     component: () => import('./modules/home/page/HomePage.vue')
   },
   {
+    path: '/notfound',
+    name: 'notfound',
+    meta: { auth: true },
+    component: () => import('./modules/shared/pages/NotFound.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     component: () => import('./modules/auth/pages/LoginPage.vue')
 }

@@ -6,11 +6,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, ref } from 'vue'
+import HomeService  from '../services/HomeService'
 
 export default defineComponent({
   setup () {
+
+    const homeService = ref(new HomeService())
     
+    onMounted(() => {
+      console.log('pagina homes')
+      homeService.value.getPacientes().then(res=> {
+        console.log(res)
+      })
+    })
+
     return {}
   }
 })

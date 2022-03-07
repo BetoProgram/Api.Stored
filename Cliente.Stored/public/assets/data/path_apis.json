@@ -1,0 +1,8 @@
+{
+  "PathProd":{
+    "citas":""
+  },
+  "PathDev":{
+    "citas":"https://localhost:44303/api"
+  }
+}

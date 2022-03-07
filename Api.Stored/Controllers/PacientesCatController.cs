@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
@@ -29,9 +28,9 @@ namespace Api.Stored.Controllers
         }
         // GET: api/<PacientesCatController>
         [HttpGet]
-        public IEnumerable<PacientesResponseDto> Get()
+        public async Task<IEnumerable<PacientesResponseDto>> Get()
         {
-            var pacientes = _repositoryBase.FindAll();
+            var pacientes = await _repositoryBase.FindAll(o=>o.FcNombres, x=>x.TblDatCita);
             var pacientesMap = _mapper.Map<List<PacientesResponseDto>>(pacientes);
             return pacientesMap;
         }

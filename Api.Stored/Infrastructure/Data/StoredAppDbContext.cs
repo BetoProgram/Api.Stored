@@ -422,6 +422,8 @@ namespace Api.Stored.Infrastructure.Data
                     .HasForeignKey(d => d.FiIdMedico)
                     .OnDelete(DeleteBehavior.ClientSetNull);
             });
+
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

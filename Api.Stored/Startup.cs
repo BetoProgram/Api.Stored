@@ -38,6 +38,12 @@ namespace Api.Stored
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            //cors
+            services.AddCors(opt =>
+            {
+                opt.AddPolicy("CorsPolicy",
+                builder => builder.WithOrigins("*").WithHeaders("*").WithMethods("*"));
+            });
             //Base de datos
             services.AddDbContext<StoredAppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("ConnectionDefault")));
             //Identity
@@ -93,7 +99,7 @@ namespace Api.Stored
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseCors("CorsPolicy");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
